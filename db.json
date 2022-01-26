@@ -5,7 +5,7 @@
       "name": "Computer",
       "price": 4300,
       "quantity": 600,
-      "selected": true,
+      "selected": false,
       "available": true
     },
     {
@@ -29,14 +29,14 @@
       "name": "Hard Drive",
       "price": 400,
       "quantity": 4000,
-      "selected": true,
+      "selected": false,
       "available": true
     },
     {
       "name": "Mouse",
       "price": "25",
       "quantity": "4200",
-      "selected": true,
+      "selected": false,
       "available": false,
       "id": 9
     },
@@ -44,7 +44,7 @@
       "name": "Machine",
       "price": "1400",
       "quantity": "150",
-      "selected": true,
+      "selected": false,
       "available": true,
       "id": 10
     },
@@ -52,7 +52,7 @@
       "name": "Pen",
       "price": "2.50",
       "quantity": "1200",
-      "selected": true,
+      "selected": false,
       "available": false,
       "id": 11
     }
