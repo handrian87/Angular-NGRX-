@@ -1,14 +1,6 @@
 {
   "products": [
     {
-      "id": 1,
-      "name": "Computer",
-      "price": 4300,
-      "quantity": 600,
-      "selected": false,
-      "available": true
-    },
-    {
       "id": 2,
       "name": "Printer",
       "price": 300,
@@ -31,30 +23,6 @@
       "quantity": 4000,
       "selected": false,
       "available": true
-    },
-    {
-      "name": "Mouse",
-      "price": "25",
-      "quantity": "4200",
-      "selected": false,
-      "available": false,
-      "id": 9
-    },
-    {
-      "name": "Machine",
-      "price": "1400",
-      "quantity": "150",
-      "selected": false,
-      "available": true,
-      "id": 10
-    },
-    {
-      "name": "Pen",
-      "price": "2.50",
-      "quantity": "1200",
-      "selected": false,
-      "available": false,
-      "id": 11
     }
   ]
 }

@@ -4,6 +4,7 @@ import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {catchError, map, mergeMap, Observable, of} from "rxjs";
 import {Action} from "@ngrx/store";
 import {
+  DeleteProductsActionSuccess,
   GetAllProductsActionError,
   GetAllProductsActionSuccess,
   GetSelectedProductsActionError,
@@ -15,6 +16,7 @@ import {
   SearchProductsActionSuccess,
   SelectProductsAction, SelectProductsActionError, SelectProductsActionSuccess
 } from "./products.actions";
+import {Product} from "../model/product.model";
 
 @Injectable({
   providedIn: 'root'
@@ -93,6 +95,22 @@ export class ProductsEffectService {
   );
   // endregion
 
+  // region Delete Product
+  DeleteProductsEffect: Observable<ProductActions>= createEffect(
+    ()=> this.effectActions.pipe(
+      ofType(ProductsActionsTypes.DELETE_PRODUCTS),
+      mergeMap((action: ProductActions)=> {
+          return this.productService.delete(action.payload.id)
+            .pipe(
+              // Transmission en paramètre du produit qu'on a supprimé
+              map(() => new DeleteProductsActionSuccess(action.payload)),
+              catchError((err)=>of(new SelectProductsActionError(err.message)))
+            )
+        }
+      )
+    )
+  );
+  // endregion
 
 
 }

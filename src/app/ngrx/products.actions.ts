@@ -17,7 +17,11 @@ export enum ProductsActionsTypes {
   /* SELECT PRODUCT */
   SELECT_PRODUCTS ="[Product] Select products",
   SELECT_PRODUCTS_SUCCESS = "[Products] Select products Success",
-  SELECT_PRODUCTS_ERROR = "[Products] Select products Error"
+  SELECT_PRODUCTS_ERROR = "[Products] Select products Error",
+  /* DELETE PRODUCT */
+  DELETE_PRODUCTS ="[Product] Delete products",
+  DELETE_PRODUCTS_SUCCESS = "[Products] Delete products Success",
+  DELETE_PRODUCTS_ERROR = "[Products] Delete products Error"
 }
 
 // CRÉATION DES ACTIONS:
@@ -54,7 +58,8 @@ export class GetAllProductsActionError implements Action {
 export type ProductActions = GetAllProductsAction | GetAllProductsActionSuccess |
   GetAllProductsActionError | GetSelectedProductsAction | GetSelectedProductsActionSuccess |
   GetSelectedProductsActionError | SearchProductsAction | SearchProductsActionSuccess |
-  SearchProductsActionError | SelectProductsAction | SelectProductsActionSuccess | SelectProductsActionError;
+  SearchProductsActionError | SelectProductsAction | SelectProductsActionSuccess | SelectProductsActionError |
+  DeleteProductsAction | DeleteProductsActionSuccess | DeleteProductsActionError;
 
 /* SELECTED PRODUCT */
 //region Selected Product
@@ -113,6 +118,27 @@ export class SelectProductsActionSuccess implements Action {
 
 export class SelectProductsActionError implements Action {
   type: ProductsActionsTypes = ProductsActionsTypes.SELECT_PRODUCTS_ERROR;
+  constructor(public payload:string) {
+  }
+}
+//endregion
+
+// DELETE Product
+//region DELETE Product
+export class DeleteProductsAction implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.DELETE_PRODUCTS;
+  constructor(public payload:Product) {
+  }
+}
+
+export class DeleteProductsActionSuccess implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.DELETE_PRODUCTS_SUCCESS;
+  constructor(public payload:Product) {
+  }
+}
+
+export class DeleteProductsActionError implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.DELETE_PRODUCTS_ERROR;
   constructor(public payload:string) {
   }
 }

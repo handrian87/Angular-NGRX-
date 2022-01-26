@@ -65,7 +65,7 @@ export function productsReducer(state:ProductsState = initState, action: Action)
     case ProductsActionsTypes.GET_SELECTED_PRODUCTS_ERROR:
       return {...state, dataState: ProductsStateEnum.ERROR, errorMessage:(<ProductActions>action).payload}
     // endregion
-      // region Search product
+    // region Search product
     case ProductsActionsTypes.SEARCH_PRODUCTS:
       return {...state, dataState: ProductsStateEnum.LOADING}
     case ProductsActionsTypes.SEARCH_PRODUCTS_SUCCESS:
@@ -73,6 +73,7 @@ export function productsReducer(state:ProductsState = initState, action: Action)
     case ProductsActionsTypes.SEARCH_PRODUCTS_ERROR:
       return {...state, dataState: ProductsStateEnum.ERROR, errorMessage: (<ProductActions>action).payload}
     //endregion
+    // region Selected product
     case ProductsActionsTypes.SELECT_PRODUCTS:
       return {...state, dataState: ProductsStateEnum.LOADING}
     case ProductsActionsTypes.SELECT_PRODUCTS_SUCCESS:
@@ -85,6 +86,19 @@ export function productsReducer(state:ProductsState = initState, action: Action)
       return {...state, dataState: ProductsStateEnum.LOADED, products: data}
     case ProductsActionsTypes.SELECT_PRODUCTS_ERROR:
       return {...state, dataState: ProductsStateEnum.ERROR, errorMessage: (<ProductActions>action).payload}
+    // endregion
+    //region Delete product
+    case ProductsActionsTypes.DELETE_PRODUCTS:
+      return {...state, dataState: ProductsStateEnum.LOADING}
+    case ProductsActionsTypes.DELETE_PRODUCTS_SUCCESS:
+      let p: Product=(<ProductActions>action).payload;
+      let index=state.products.indexOf(p);
+      let listProduct = [...state.products];
+      listProduct.splice(index,1)
+      return {...state, dataState: ProductsStateEnum.LOADED, products: listProduct}
+    case ProductsActionsTypes.DELETE_PRODUCTS_ERROR:
+      return {...state, dataState: ProductsStateEnum.ERROR, errorMessage: (<ProductActions>action).payload}
+    //endregion
     default: return {...state}
   }
 }
