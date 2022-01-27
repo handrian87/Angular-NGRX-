@@ -6,7 +6,9 @@ export enum ProductsStateEnum {
   LOADING="Loading",
   LOADED="Loaded",
   ERROR="Error",
-  INITIAL="Initial"
+  INITIAL="Initial",
+  NEW="NEW",
+  EDIT="EDIT"
 }
 
 export interface ProductsState {
@@ -97,6 +99,26 @@ export function productsReducer(state:ProductsState = initState, action: Action)
       listProduct.splice(index,1)
       return {...state, dataState: ProductsStateEnum.LOADED, products: listProduct}
     case ProductsActionsTypes.DELETE_PRODUCTS_ERROR:
+      return {...state, dataState: ProductsStateEnum.ERROR, errorMessage: (<ProductActions>action).payload}
+    //endregion
+    //region New product
+    case ProductsActionsTypes.NEW_PRODUCT:
+      return {...state, dataState: ProductsStateEnum.LOADING}
+    case ProductsActionsTypes.NEW_PRODUCT_SUCCESS:
+      return {...state, dataState: ProductsStateEnum.NEW}
+    case ProductsActionsTypes.NEW_PRODUCT_ERROR:
+      return {...state, dataState: ProductsStateEnum.ERROR, errorMessage: (<ProductActions>action).payload}
+    //endregion
+    //region Save product
+    case ProductsActionsTypes.SAVE_PRODUCT:
+      return {...state, dataState: ProductsStateEnum.LOADING}
+    case ProductsActionsTypes.SAVE_PRODUCT_SUCCESS:
+      let prods: Product[]=[...state.products];
+      // Ajouter le prduit ajouter dans la liste. Le nouveau produit se trouve dans
+      // (<ProductActions>action).payload
+      prods.push((<ProductActions>action).payload)
+      return {...state, dataState: ProductsStateEnum.LOADED, products: prods}
+    case ProductsActionsTypes.SAVE_PRODUCT_ERROR:
       return {...state, dataState: ProductsStateEnum.ERROR, errorMessage: (<ProductActions>action).payload}
     //endregion
     default: return {...state}

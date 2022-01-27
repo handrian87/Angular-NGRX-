@@ -2,6 +2,7 @@ import {Action} from "@ngrx/store";
 import {Product} from "../model/product.model";
 
 export enum ProductsActionsTypes {
+  //region Product action type
   /* GET ALL PRODUCT */
   GET_ALL_PRODUCTS ="[Products] Get All products",
   GET_ALL_PRODUCTS_SUCCESS = "[Products] Get All products Success",
@@ -21,7 +22,17 @@ export enum ProductsActionsTypes {
   /* DELETE PRODUCT */
   DELETE_PRODUCTS ="[Product] Delete products",
   DELETE_PRODUCTS_SUCCESS = "[Products] Delete products Success",
-  DELETE_PRODUCTS_ERROR = "[Products] Delete products Error"
+  DELETE_PRODUCTS_ERROR = "[Products] Delete products Error",
+
+  /* NEW PRODUCT */
+  NEW_PRODUCT ="[Product] New products",
+  NEW_PRODUCT_SUCCESS = "[Products] New products Success",
+  NEW_PRODUCT_ERROR = "[Products] New products Error",
+  //endregion
+  /* SAVE PRODUCT */
+  SAVE_PRODUCT ="[Product] Save products",
+  SAVE_PRODUCT_SUCCESS = "[Products] Save products Success",
+  SAVE_PRODUCT_ERROR = "[Products] Save products Error"
 }
 
 // CRÉATION DES ACTIONS:
@@ -59,7 +70,8 @@ export type ProductActions = GetAllProductsAction | GetAllProductsActionSuccess 
   GetAllProductsActionError | GetSelectedProductsAction | GetSelectedProductsActionSuccess |
   GetSelectedProductsActionError | SearchProductsAction | SearchProductsActionSuccess |
   SearchProductsActionError | SelectProductsAction | SelectProductsActionSuccess | SelectProductsActionError |
-  DeleteProductsAction | DeleteProductsActionSuccess | DeleteProductsActionError;
+  DeleteProductsAction | DeleteProductsActionSuccess | DeleteProductsActionError | NewProductAction |
+  NewProductActionSuccess | NewProductActionError | SaveProductAction | SaveProductActionSuccess | SaveProductActionError;
 
 /* SELECTED PRODUCT */
 //region Selected Product
@@ -139,6 +151,48 @@ export class DeleteProductsActionSuccess implements Action {
 
 export class DeleteProductsActionError implements Action {
   type: ProductsActionsTypes = ProductsActionsTypes.DELETE_PRODUCTS_ERROR;
+  constructor(public payload:string) {
+  }
+}
+//endregion
+
+// NEW PRODUCT
+//region NEW PRODUCT
+export class NewProductAction implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.NEW_PRODUCT;
+  constructor(public payload:any) {
+  }
+}
+
+export class NewProductActionSuccess implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.NEW_PRODUCT_SUCCESS;
+  constructor(public payload:any) {
+  }
+}
+
+export class NewProductActionError implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.NEW_PRODUCT_ERROR;
+  constructor(public payload:string) {
+  }
+}
+//endregion
+
+// SAVE PRODUCT
+//region SAVE PRODUCT
+export class SaveProductAction implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.SAVE_PRODUCT;
+  constructor(public payload:Product) {
+  }
+}
+
+export class SaveProductActionSuccess implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.SAVE_PRODUCT_SUCCESS;
+  constructor(public payload:Product) {
+  }
+}
+
+export class SaveProductActionError implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.SAVE_PRODUCT_ERROR;
   constructor(public payload:string) {
   }
 }

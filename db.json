@@ -21,8 +21,22 @@
       "name": "Hard Drive",
       "price": 400,
       "quantity": 4000,
-      "selected": false,
+      "selected": true,
       "available": true
+    },
+    {
+      "name": "Pen",
+      "price": "22",
+      "quantity": "120",
+      "selected": false,
+      "id": 7
+    },
+    {
+      "name": "Iphone13",
+      "price": "1450",
+      "quantity": "29",
+      "selected": true,
+      "id": 8
     }
   ]
 }

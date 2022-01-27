@@ -8,9 +8,9 @@ import {
   GetAllProductsActionError,
   GetAllProductsActionSuccess,
   GetSelectedProductsActionError,
-  GetSelectedProductsActionSuccess,
+  GetSelectedProductsActionSuccess, NewProductActionSuccess,
   ProductActions,
-  ProductsActionsTypes,
+  ProductsActionsTypes, SaveProductAction, SaveProductActionError, SaveProductActionSuccess,
   SearchProductsAction,
   SearchProductsActionError,
   SearchProductsActionSuccess,
@@ -112,5 +112,30 @@ export class ProductsEffectService {
   );
   // endregion
 
-
+  // region New Product
+  newProductsEffect: Observable<ProductActions>= createEffect(
+    ()=> this.effectActions.pipe(
+      ofType(ProductsActionsTypes.NEW_PRODUCT),
+      map((action: ProductActions)=> {
+          return new NewProductActionSuccess({})
+        }
+      )
+    )
+  );
+  // endregion
+  SaveProductsEffect: Observable<ProductActions>= createEffect(
+    ()=> this.effectActions.pipe(
+      ofType(ProductsActionsTypes.SAVE_PRODUCT),
+      mergeMap((action: ProductActions)=> {
+          return this.productService.save(action.payload)
+            .pipe(
+              // Comme la méthode save retourne un objet de type product,
+              // on va mettre product comme paramètre de la méthode map
+              map((product) => new SaveProductActionSuccess(product)),
+              catchError((err)=>of(new SaveProductActionError(err.message)))
+            )
+        }
+      )
+    )
+  );
 }
