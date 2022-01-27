@@ -8,7 +8,8 @@ export enum ProductsStateEnum {
   ERROR="Error",
   INITIAL="Initial",
   NEW="NEW",
-  EDIT="EDIT"
+  EDIT="EDIT",
+  UPDATED="UPDATED",
 }
 
 export interface ProductsState {
@@ -16,14 +17,16 @@ export interface ProductsState {
   products: Product[],
   // Variable pour la gestion des états (state)
   errorMessage: string,
-  dataState: ProductsStateEnum
+  dataState: ProductsStateEnum,
+  currentProduct: Product|null
 }
 
 // Il est important de donner une valeur initiale au State
 const initState: ProductsState = {
   products: [],
   errorMessage: "",
-  dataState: ProductsStateEnum.INITIAL
+  dataState: ProductsStateEnum.INITIAL,
+  currentProduct: null
 }
 
 // CRÉATION DU REDUCER.
@@ -121,6 +124,26 @@ export function productsReducer(state:ProductsState = initState, action: Action)
     case ProductsActionsTypes.SAVE_PRODUCT_ERROR:
       return {...state, dataState: ProductsStateEnum.ERROR, errorMessage: (<ProductActions>action).payload}
     //endregion
+    //region Edit product
+    case ProductsActionsTypes.EDIT_PRODUCT:
+      return {...state, dataState: ProductsStateEnum.LOADING}
+    case ProductsActionsTypes.EDIT_PRODUCT_SUCCESS:
+      return {...state, dataState: ProductsStateEnum.EDIT, currentProduct: (<ProductActions>action).payload}
+    case ProductsActionsTypes.EDIT_PRODUCT_ERROR:
+      return {...state, dataState: ProductsStateEnum.ERROR, errorMessage: (<ProductActions>action).payload}
+    //endregion
+    //region Update product
+    case ProductsActionsTypes.UPDATE_PRODUCT:
+      return {...state, dataState: ProductsStateEnum.LOADING}
+    case ProductsActionsTypes.UPDATE_PRODUCT_SUCCESS:
+      // Mis à jour du state:
+      let updateProduct:Product=(<ProductActions>action).payload;
+      let productsListUpdated: Product[]=state.products.map(p=>(p.id==updateProduct.id)?updateProduct:p);
+      return {...state, dataState: ProductsStateEnum.UPDATED, products:productsListUpdated}
+    case ProductsActionsTypes.UPDATE_PRODUCT_ERROR:
+      return {...state, dataState: ProductsStateEnum.ERROR, errorMessage: (<ProductActions>action).payload}
+    //endregion
+
     default: return {...state}
   }
 }

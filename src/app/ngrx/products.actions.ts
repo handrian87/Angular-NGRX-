@@ -28,11 +28,22 @@ export enum ProductsActionsTypes {
   NEW_PRODUCT ="[Product] New products",
   NEW_PRODUCT_SUCCESS = "[Products] New products Success",
   NEW_PRODUCT_ERROR = "[Products] New products Error",
-  //endregion
+
   /* SAVE PRODUCT */
   SAVE_PRODUCT ="[Product] Save products",
   SAVE_PRODUCT_SUCCESS = "[Products] Save products Success",
-  SAVE_PRODUCT_ERROR = "[Products] Save products Error"
+  SAVE_PRODUCT_ERROR = "[Products] Save products Error",
+  //endregion
+  /* EDIT PRODUCT */
+  EDIT_PRODUCT ="[Product] Edit products",
+  EDIT_PRODUCT_SUCCESS = "[Products] Edit products Success",
+  EDIT_PRODUCT_ERROR = "[Products] Edit products Error",
+
+  /* UPDATE PRODUCT */
+  UPDATE_PRODUCT ="[Product] Update products",
+  UPDATE_PRODUCT_SUCCESS = "[Products] Update products Success",
+  UPDATE_PRODUCT_ERROR = "[Products] Update products Error"
+
 }
 
 // CRÉATION DES ACTIONS:
@@ -71,7 +82,9 @@ export type ProductActions = GetAllProductsAction | GetAllProductsActionSuccess 
   GetSelectedProductsActionError | SearchProductsAction | SearchProductsActionSuccess |
   SearchProductsActionError | SelectProductsAction | SelectProductsActionSuccess | SelectProductsActionError |
   DeleteProductsAction | DeleteProductsActionSuccess | DeleteProductsActionError | NewProductAction |
-  NewProductActionSuccess | NewProductActionError | SaveProductAction | SaveProductActionSuccess | SaveProductActionError;
+  NewProductActionSuccess | NewProductActionError | SaveProductAction | SaveProductActionSuccess | SaveProductActionError |
+  EditProductAction | EditProductActionSuccess | EditProductActionError | UpdateProductAction | UpdateProductActionSuccess |
+  UpdateProductActionError;
 
 /* SELECTED PRODUCT */
 //region Selected Product
@@ -193,6 +206,48 @@ export class SaveProductActionSuccess implements Action {
 
 export class SaveProductActionError implements Action {
   type: ProductsActionsTypes = ProductsActionsTypes.SAVE_PRODUCT_ERROR;
+  constructor(public payload:string) {
+  }
+}
+//endregion
+
+// EDIT PRODUCT
+//region EDIT PRODUCT
+export class EditProductAction implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.EDIT_PRODUCT;
+  constructor(public payload:number) {
+  }
+}
+
+export class EditProductActionSuccess implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.EDIT_PRODUCT_SUCCESS;
+  constructor(public payload:Product) {
+  }
+}
+
+export class EditProductActionError implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.EDIT_PRODUCT_ERROR;
+  constructor(public payload:string) {
+  }
+}
+//endregion
+
+// UPDATE PRODUCT
+//region UPDATE PRODUCT
+export class UpdateProductAction implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.UPDATE_PRODUCT;
+  constructor(public payload:Product) {
+  }
+}
+
+export class UpdateProductActionSuccess implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.UPDATE_PRODUCT_SUCCESS;
+  constructor(public payload:Product) {
+  }
+}
+
+export class UpdateProductActionError implements Action {
+  type: ProductsActionsTypes = ProductsActionsTypes.UPDATE_PRODUCT_ERROR;
   constructor(public payload:string) {
   }
 }

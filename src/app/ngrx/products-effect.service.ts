@@ -5,16 +5,26 @@ import {catchError, map, mergeMap, Observable, of} from "rxjs";
 import {Action} from "@ngrx/store";
 import {
   DeleteProductsActionSuccess,
+  EditProductActionError,
+  EditProductActionSuccess,
   GetAllProductsActionError,
   GetAllProductsActionSuccess,
   GetSelectedProductsActionError,
-  GetSelectedProductsActionSuccess, NewProductActionSuccess,
+  GetSelectedProductsActionSuccess,
+  NewProductActionSuccess,
   ProductActions,
-  ProductsActionsTypes, SaveProductAction, SaveProductActionError, SaveProductActionSuccess,
+  ProductsActionsTypes,
+  SaveProductAction,
+  SaveProductActionError,
+  SaveProductActionSuccess,
   SearchProductsAction,
   SearchProductsActionError,
   SearchProductsActionSuccess,
-  SelectProductsAction, SelectProductsActionError, SelectProductsActionSuccess
+  SelectProductsAction,
+  SelectProductsActionError,
+  SelectProductsActionSuccess,
+  UpdateProductActionError,
+  UpdateProductActionSuccess
 } from "./products.actions";
 import {Product} from "../model/product.model";
 
@@ -123,6 +133,7 @@ export class ProductsEffectService {
     )
   );
   // endregion
+  // region Save Product
   SaveProductsEffect: Observable<ProductActions>= createEffect(
     ()=> this.effectActions.pipe(
       ofType(ProductsActionsTypes.SAVE_PRODUCT),
@@ -138,4 +149,41 @@ export class ProductsEffectService {
       )
     )
   );
+  // endregion
+  // region Edit Product
+  EditProductsEffect: Observable<ProductActions>= createEffect(
+    ()=> this.effectActions.pipe(
+      ofType(ProductsActionsTypes.EDIT_PRODUCT),
+      mergeMap((action: ProductActions)=> {
+          return this.productService.getProductById(action.payload)
+            // action.payload est l'id du produit sélectionné
+            .pipe(
+              // Comme la méthode getProductById retourne un objet de type product,
+              // on va mettre product comme paramètre de la méthode map
+              map((product) => new EditProductActionSuccess(product)),
+              catchError((err)=>of(new EditProductActionError(err.message)))
+            )
+        }
+      )
+    )
+  );
+  // endregion
+  // region Update Product
+  updateProductsEffect: Observable<ProductActions>= createEffect(
+    ()=> this.effectActions.pipe(
+      ofType(ProductsActionsTypes.UPDATE_PRODUCT),
+      mergeMap((action: ProductActions)=> {
+          return this.productService.update(action.payload)
+            // action.payload est l'id du produit sélectionné
+            .pipe(
+              // Comme la méthode getProductById retourne un objet de type product,
+              // on va mettre product comme paramètre de la méthode map
+              map((product) => new UpdateProductActionSuccess(product)),
+              catchError((err)=>of(new UpdateProductActionError(err.message)))
+            )
+        }
+      )
+    )
+  );
+  // endregion
 }
